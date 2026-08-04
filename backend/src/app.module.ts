@@ -5,6 +5,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import * as mariadb from 'mariadb';
 import { MODELS } from './database/models';
 import {
   AdminPropertiesController,
@@ -37,6 +38,7 @@ import {
       inject: [ConfigService],
       useFactory: (c: ConfigService) => ({
         dialect: 'mariadb',
+        dialectModule: mariadb,
         host: c.getOrThrow('DB_HOST'),
         port: Number(c.get('DB_PORT', 3306)),
         database: c.getOrThrow('DB_NAME'),
